@@ -18,9 +18,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       render 'new'
     end
@@ -73,5 +73,22 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user.admin?
     end
 end
+
+##### 11.4
+##### running this failed...
+##### heroku addons:create sendgrid:starter
+##### heroku config:get SENDGRID_USERNAME
+##### heroku config:get SENDGRID_PASSWORD
+
+# $ rails test
+# $ git add -A
+# $ git commit -m "Add account activation"
+# $ git checkout master
+# $ git merge account-activation
+
+# $ rails test
+# $ git push
+# $ git push heroku
+# $ heroku run rails db:migrate
 
 
