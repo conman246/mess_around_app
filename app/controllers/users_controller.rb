@@ -91,4 +91,7 @@ end
 # $ git push heroku
 # $ heroku run rails db:migrate
 
+##### Then, to set up in Production...
+#####$ heroku addons:create sendgrid:starter
+
 
