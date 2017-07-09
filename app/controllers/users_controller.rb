@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def new
@@ -53,15 +54,6 @@ class UsersController < ApplicationController
 
     # Before filters
 
-    # Confirms a logged-in user.
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
-
     # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id])
@@ -91,7 +83,13 @@ end
 # $ git push heroku
 # $ heroku run rails db:migrate
 
+# Chapter 12 towards the end... 
 ##### Then, to set up in Production...
 #####$ heroku addons:create sendgrid:starter
+
+# image resizing (13.4.3) issues...
+# and in 13.4.4 you need to set up AWS
+
+#stopped at 13.4.3
 
 
